@@ -13,8 +13,9 @@ Blongular v0.0.1 (alpha)
 - Gravatar Support
 - Setup Manager
 
-## Coming Soon™
+## Coming Soon™ (feel free to help)
 
+- Performance Improvements
 - Support Other Template Engines (like Jade)
 - Easy Install Plugin Manager
 - Internationalization (I18N)
@@ -22,14 +23,14 @@ Blongular v0.0.1 (alpha)
 - Static Content Rendering Mode
 - Search Engine Optimization
 
-Make sugestions!
+[Make sugestions!](https://github.com/blongular/blongular/issues)
 
 # Quick Start
 
 ## Requirements
 
-- Node.JS v0.8.21+ and NPM
-- MongoDB Database
+- Node.JS v0.8.x with NPM
+- MongoDB server running anywhere
 
 ## Install
 
@@ -43,6 +44,7 @@ Now let's setup your new blongular.
 
 - Inside blongular's directory, type: `node blongular --setup`
 - Visit `http://<your ip address or localhost>:27890/` on your browser.]
+- Fullfil the setup form.
 
 ## Blog Development (--dev) 
 
@@ -72,7 +74,17 @@ plugins.json            Blog's plugins configurations
 
 # Support & Contribute
 
-Feel welcome to open **PR/Issues/Features/Suggestions** but [read this first](https://github.com/blongular/blongular/blob/master/CONTRIBUTING.md), please.
+You can support this project:
+- Leaving a [star](https://github.com/blongular/blongular/star)
+- Leaving [suggestions](https://github.com/blongular/blongular/issues)
+- Requesting [features](https://github.com/blongular/blongular/issues)
+- Reporting [issues](https://github.com/blongular/blongular/issues)
+- Building [plugins](https://github.com/blongular/blongular-seed/blob/master/plugins/README.md)
+- Building [themes](https://github.com/blongular/blongular-theme-default)
+- Helping with [money](https://www.gittip.com/pedronasser/) or [bitcoin](https://coinbase.com/checkouts/08cba7f31ee661419e122a5f0350b489)
+- Obvious: [Commiting](https://github.com/blongular/blongular/pulls)
+
+Feel welcome to send **Issues and Pull Requests**, but [read this before](https://github.com/blongular/blongular/blob/master/CONTRIBUTING.md), please.
 
 # Development Flow
 
