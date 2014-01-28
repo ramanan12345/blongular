@@ -1,9 +1,9 @@
 {
 	"name": "blongular",
 	"version": "0.0.2",
-	"description": "A simple and powerful blog system using WNS, MongoDB, Angular, Bootstrap and other stuff",
+	"description": "A simple and powerful blog system using MonoStack, MongoDB, Angular, Bootstrap and other stuff",
 	"main": "blongular.js",
-	"moduleClass": "wnServer",
+	"moduleClass": "Server",
 	"scripts": {
 		"start": "node blongular"
 	},
@@ -15,7 +15,7 @@
 		"mongo",
 		"blog",
 		"angular",
-		"wns"
+		"monostack"
 	],
 	"author": "Pedro Nasser <pedronasser@yept.net>",
 	"license": "MIT",

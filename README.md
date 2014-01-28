@@ -1,4 +1,4 @@
-Blongular v0.0.1 (alpha)
+Blongular v0.0.2 (alpha)
 ==========================
 
 ![](https://dl.dropboxusercontent.com/u/21773527/blongular.png)
@@ -42,7 +42,7 @@ to the directory `blongs/blog/themes/` inside your working blongular directory.
 
 ## Built with
 
-- [WNS Middleware](http://github.com/yeptlabs/wns)
+- [MonoStack](http://github.com/monoproject/monostack)
 - [Angular](http://github.com/angular/angular.js)
 - [Bootstrap](http://github.com/twbs/bootstrap)
 - [Express](http://github.com/visionmedia/express)
