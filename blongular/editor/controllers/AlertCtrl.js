@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class Extension
 	 */
-	extend: ['wnAngularController'],
+	extend: ['AngularController'],
 
 	/**
 	 * PRIVATE

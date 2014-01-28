@@ -20,15 +20,17 @@ module.exports = {
 			// Auto import
 			"import": [],
 
+			"cache": true,
+
 			// Components
 			"components": {
 				// Blongular Server
 				"blongular": {
-					"class": "wnBlongularServer"
+					"class": "BlongularServer"
 				},
-				// wnDbConnection configuration (remove comment to enable)
+				// DbConnection configuration (remove comment to enable)
 				"database": {
-					"class": "wnDbConnection",
+					"class": "DbConnection",
 					"alias": "db",
 					"engine": "mongo",
 					"address": "127.0.0.1",
@@ -53,11 +55,11 @@ module.exports = {
 			self.moment=moment;
 
 			// Debug MongoDB
-			self.db.dataObject.driver.set('debug',true);
+			if (self.db.getConfig('debug')===true)
+				self.db.dataObject.driver.set('debug',true);
 
 			// DB Connection Message
 			self.db.once('connect',function (e,connected) {
-
 				if (self.setupMode)
 					return self.e.log('Running using SETUP mode.');
 
@@ -85,7 +87,7 @@ module.exports = {
 			self.express.enable("jsonp callback");
 
 		}
-		
+
 	}
 
 };

@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class Extension
 	 */
-	extend: ['wnAngularController'],
+	extend: ['AngularController'],
 
 	/**
 	 * PRIVATE
@@ -49,7 +49,7 @@ module.exports = {
 			$scope.editor = [];
 			$scope.editor.push(new MediumEditor('.editable', {
 				placeholder: '',
-				buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'orderedlist', 'unorderedlist', 'pre']
+				buttons: ['bold', 'italic', 'underline', 'anchor', 'header1', 'header2', 'quote', 'orderedlist', 'unorderedlist', 'pre', 'strikethrough']
 			}));
 
 			if (parent.location.hash === "#edit")

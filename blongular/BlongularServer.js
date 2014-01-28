@@ -1,6 +1,6 @@
 /**
- * Blongular -> wnBlongularServer
- * 
+ * Blongular -> BlongularServer
+ *
  * @copyright: Copyright &copy; 2013- Pedro Nasser &reg;
  * @page: http://github.com/blongular/blungular
  * @license: http://github.com/blongular/blongular/blob/master/LICENSE
@@ -18,7 +18,7 @@ module.exports = {
 	/**
 	 * Class Extension
 	 */
-	extend: ['wnComponent'],
+	extend: ['Component'],
 
 	/**
 	 * PRIVATE

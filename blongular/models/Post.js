@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class dependencies
 	 */
-	extend: ['wnActiveRecord'],
+	extend: ['ActiveRecord'],
 
 	/**
 	 * PRIVATE
@@ -61,7 +61,7 @@ module.exports = {
 				subtitle: {
 					type: String,
 					label: 'Subtitle'
-				},				
+				},
 				content: {
 					type: String,
 					label: 'Content'
@@ -70,6 +70,10 @@ module.exports = {
 					type: 'ObjectId',
 					label: 'UserID',
 					required: true
+				},
+				category: {
+					type: Array,
+					label: 'Category'
 				},
 				tags: {
 					type: Array,
@@ -135,7 +139,7 @@ module.exports = {
 		 * @param number $order (1 for ASC, -1 for DESC)
 		 * @param number $published only?
 		 */
-		$list: function (offset,limit,order,published)
+		$list: function (offset,limit,order,published::Boolean)
 		{
 			limit = Number(limit) || 1;
 			offset = Number(offset) || 0;
@@ -151,7 +155,7 @@ module.exports = {
 			if (published)
 				query.exists = ['publishDate',true];
 
-			this.query(query).exec(function (err,posts) {
+			var cb = function (err,posts) {
 				if (err!==null)
 					return done.reject(err);
 
@@ -160,7 +164,9 @@ module.exports = {
 					fposts.push(self.formatPost(posts[p]._doc));
 
 				done.resolve(fposts)
-			});
+			}
+
+			this.query(query).exec(cb);
 
 			return done.promise;
 		},
@@ -217,11 +223,11 @@ module.exports = {
 		/**
 		 * Promise: Update this post.
 		 */
-		$update: function (data)
+		$update: function (data:::Object)
 		{
 			var _id = self.attr('_id');
 			var user = self.attr('user');
-			if (_.isUndefined(_id)||!_.isObject(data)||_.isUndefined(user))
+			if (_.isUndefined(_id)||_.isUndefined(user))
 				done.reject(new Error(''));
 			else
 			{

@@ -27,7 +27,7 @@ module.exports = {
 
 		/**
 		 * Called after any controller is initialized.
-		 */	
+		 */
 		afterInit: function ()
 		{
 			self.blongular=blongular=this.app.getConfig();

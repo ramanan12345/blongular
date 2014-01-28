@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class dependencies
 	 */
-	extend: ['wnActiveRecord'],
+	extend: ['ActiveRecord'],
 
 	/**
 	 * NPM Dependencies
@@ -27,12 +27,16 @@ module.exports = {
 		errors: {
 			PROCESS_ERROR: 'Error during process',
 			MISSING_INFO: 'All field must be fullfiled',
+			INCORRECT_INFO: 'Incorrect information',
 			USER_NOTFOUND: 'User not found',
 			USER_EXIST: 'User already exist',
 			EMAIL_INVALID: 'Invalid email',
 			PASSWORD_INVALID: 'Invalid password',
+			PASSWORD_UNDEFINED: 'User.password not defined',
 			LOGIN_INVALID: 'User not found',
-			EMAIL_INCORRECT: 'Incorrect email confirmation'
+			EMAIL_INCORRECT: 'Incorrect email confirmation',
+			PASSWORD_SALT: 'Failed to generate password salt',
+			PASSWORD_BCRYPT: 'Failed to bcrypt password'
 		}
 	},
 
@@ -118,7 +122,7 @@ module.exports = {
 		/**
 		 * Validate 
 		 */
-		$validate: function (action)
+		$validate: function (action::String)
 		{
 			switch (action)
 			{
@@ -151,39 +155,50 @@ module.exports = {
 		/**
 		 * Promise: Encrypt password
 		 */
-		$encryptPassword: function (pass) {
-			if (!_.isString(pass))
-				done.resolve(pass);
-			else 
-				bcrypt.genSalt(10, function(err, salt) {
-					if (err)
-						done.resolve(pass);
-				    else {
-						bcrypt.hash(pass, salt, function(err, hash) {
-							if (err)
-								done.resolve(pass);
-						    else
-								done.resolve(hash);
-						});
-				    }
-				});
+		$encryptPassword: function (pass:::String)
+		{
+
+			function genSalt(err, salt)
+			{
+				if (err)
+					done.reject(new Error('PASSWORD_SALT'));
+			    else {
+					bcrypt.hash(pass, salt, cryptResult);
+			    }
+			}
+
+			function cryptResult(err, hash)
+			{
+				if (err)
+					done.reject(new Error('PASSWORD_BCRYPT'));
+			    else
+					done.resolve(hash);
+			}
+
+			bcrypt.genSalt(10, genSalt);
+
 			return done.promise;
 		},
 
 		/**
 		 * Promise: Compare password against bcrypted password.
 		 */
-		$comparePassword: function (pass) {
-			if (!_.isString(pass)||!_.isString(self.attr('password')))
-				done.reject(new Error('PROCESS_ERROR'));
+		$comparePassword: function (pass:::String)
+		{
+			if (!_.isString(self.attr('password')))
+				done.reject(new Error('PASSWORD_UNDEFINED'));
 			else 
 			{
-				bcrypt.compare(pass, self.attr('password'), function(err, res) {
+
+				function comparePassword(err, res) {
 					if (err||!res)
-						done.reject(new Error('INVALID_PASSWORD'));
+						done.reject(new Error('PASSWORD_INVALID'));
 				    else
 				    	done.resolve(res);
-				});
+				}
+
+				bcrypt.compare(pass, self.attr('password'), comparePassword);
+
 			}
 			return done.promise;
 		},
@@ -191,13 +206,14 @@ module.exports = {
 		/**
 		 * Promise: Get user from DB, check if password matches
 		 */
-		$login: function (password) {
+		$login: function (password:::String)
+		{
 			var findUser = {};
 			var password = password;
 			var email = self.attr('email');
 
-			if (!_.isString(password) || !_.isString(email) || password.length==0 || email.length == 0)
-				done.reject(new Error('Missing information'));
+			if (!_.isString(email) || password.length==0 || email.length == 0)
+				done.reject(new Error('INCORRECT_INFO'));
 			else
 			{
 				findUser.email = email;
@@ -213,13 +229,9 @@ module.exports = {
 					}
 				})
 				// STEP 3: Resolve Promise
-				.then(function (correct) {
-					done.resolve(true);
-				})
+				.then(done.resolve)
 				// STEP FAIL: Reject promise
-				.catch(function (err) {
-					done.reject(err);
-				})
+				.catch(done.reject)
 			}
 
 			return done.promise;
@@ -228,13 +240,12 @@ module.exports = {
 		/**
 		 * Promise: Return the User from DB.
 		 */
-		$getUser: function (user,select)
+		$getUser: function (user:::Object,select)
 		{
-			if (!_.isObject(user))
-				done.reject(new Error('PROCESS_ERROR'))
+			if (!_.isUndefined(select) && !_.isObject(select))
+				done.reject(new Error('PROCESS_ERROR'));
 			else
-			{
-				var query = self.query().find(user).limit(1).select(select).find(function (err,d) {
+				self.query().find(user).limit(1).select(select).find(function (err,d) {
 					if (err)
 						done.reject(new Error('PROCESS_ERROR'));
 					else if (_.isNull(d) || (_.isArray(d) && d.length==0))
@@ -242,12 +253,12 @@ module.exports = {
 					else
 					{
 						self.setAttributes(d[0]);
-						self.getGravatar(function () {
-							done.resolve(self.getAttributes())
+						self.$getGravatar()
+						.then(function () {
+							done.resolve(self.getAttributes());
 						});
 					}
 				});
-			}
 
 			return done.promise;
 		},
@@ -255,16 +266,21 @@ module.exports = {
 		/**
 		 * Get gravatar hash for user
 		 */
-		getGravatar: function (cb) {
+		$getGravatar: function ()
+		{
 			var email = self.attr('gravatarEmail');
-			if (_.isUndefined(email))
-				cb&&cb();
+
+			if (!_.isString(email))
+				done.reject(new Error('EMAIL_INVALID'));
 			else {
 				var md5sum = crypto.createHash('md5');
 					md5sum.update(email);
-				self.attr('gravatarHash',md5sum.digest('hex'));
-				cb&&cb()
+				var digest = md5sum.digest('hex');
+				self.attr('gravatarHash',digest);
+				done.resolve(digest);
 			}
+
+			return done.promise;
 		},
 
 		/**
@@ -279,7 +295,7 @@ module.exports = {
 			{
 				self.getCollection().findOne(attr, function (err,d) {
 					if (err)
-						done.reject(err);
+						done.reject(new Error('PROCESS_ERROR'));
 					else
 					{
 						if (d==null)
@@ -323,9 +339,7 @@ module.exports = {
 			})
 
 			// Exception
-			.catch(function (err) {
-				done.reject(err);
-			});
+			.catch(done.reject);
 
 			return done.promise;
 		},
@@ -333,16 +347,16 @@ module.exports = {
 		/**
 		 * Promise: Update user
 		 */
-		$update: function (newProps) {
-			if (!_.isObject(newProps) || !self.attr('_id'))
+		$update: function (newProps:::Object)
+		{
+			if (!self.attr('_id'))
 				done.reject(new Error('PROCESS_ERROR'))
 			else {
-
 				self.newObject=false;
 
-				function save (password) {
-
-					if (password)
+				function save (password)
+				{
+					if (!_.isUndefined(password))
 						newProps.password = password;
 
 					var _id = self.attr('_id');
@@ -352,18 +366,15 @@ module.exports = {
 					self.setAttributes(newProps);
 
 					self.$save()
-					.then(function (doc) {
-						done.resolve(doc);
-					})
-					.catch(function (err) {
-						done.reject(err);
-					});
-
+					.then(done.resolve)
+					.catch(done.reject);
 				}
 
 				// Just try to encrypt password (if undefined it skips)
-				self.$encryptPassword(newProps.password).then(save).catch(save);
-
+				if (_.isString(newProps.password))
+					self.$encryptPassword(newProps.password).then(save).catch(done.reject);
+				else
+					save();
 			}
 
 			return done.promise;
@@ -401,134 +412,6 @@ module.exports = {
 					{
 						done.resolve(doc);
 					}
-				});
-			}
-
-			return done.promise;
-		},
-
-		setProfile: function (settings,cb) {
-			if (!settings || typeof settings !== 'object')
-				return cb&&cb(false);
-
-			delete settings._id;
-
-			if (!settings.password)
-			{
-				self.getCollection().update({ _id: self.attr('_id') }, { $set: settings }, function (err,s) {
-					if (!err && s)
-					{
-						cb&&cb(true);
-					} else 
-						cb&&cb(false);
-				});
-			} else
-			{
-				this.encryptPassword(settings.password,function (password) {
-					settings.password = password;
-					self.getCollection().update({ _id: self.attr('_id') }, { $set: settings }, function (err,s) {
-						if (!err && s)
-						{
-							cb&&cb(true);
-						} else 
-							cb&&cb(false);
-					});
-				});
-			}
-		},
-
-		/**
-		 * Send Activation Email
-		 */
-		sendActivation: function (cb)
-		{
-			if (self.attr('email') && self.attr('active')!==true)
-			{
-				self.$sendEmail('activation').then(cb).catch(cb);
-			}
-		},
-
-		/**
-		 * Promise: Send Email
-		 * Steps:
-		 *  - Get User
-		 *  - Create Verification Code
-		 *  - Render Email Template
-		 *  - Send Email
-		 */
-		$sendEmail: function (view)
-		{
-			var email = self.attr('email');
-			var app = self.getDbConnection().getParent();
-			if (!_(view).isString()||!_(email).isString())
-				done.reject(new Error('PROCESS_ERROR'));
-			else
-			{
-				self.$getUser({
-					email: email
-				})
-				.then(function (user) {
-					self.setAttributes(user);
-					var verificador = 111111+Math.floor(Math.random()*888888);
-					self.setAttribute('verificador',verificador);
-					return self.$update({
-						verificador: verificador,
-						mode: view
-					})
-				})
-				.then(function (success) {
-					var data = self.getAttributes();
-					if (success)
-						app.template.render({
-							name: 'view-'+view+'-'+(data.email||data.verificador),
-							file: app.modulePath+'views/email/'+view+'.tpl'
-						},data,function (err,viewResult) {
-							if (!err)
-							{
-								data.content = function (chunk) {
-									return chunk.write(this.html);
-								}.bind({ html: viewResult });
-
-								app.template.render({
-									name: 'layout-email',
-									file: app.modulePath+'views/layouts/email.tpl'
-								},data,function (err,content) {
-									if (!err)
-									{
-
-										var email   = emailjs;
-										var server  = email.server.connect({
-										   user:    "anuncie-noreply@dm.com.br", 
-										   password:"ads3rver!@#", 
-										   host:    "mail.dm.com.br",
-										   tls: true
-										});
-
-										//data.email 
-
-										// send the message and get a callback with an error or details of the message that was sent
-										server.send({
-										   text:    '-', 
-										   from:    "Anuncie DM.com.br <anuncie-noreply@dm.com.br>", 
-										   to:      data.name+" <"+data.email+">",
-										   subject: "Verifique sua conta",
-										   attachment: 
-										   [
-										      {data:content, alternative:true}
-										   ]
-										}, function () {
-											done.resolve();
-										});
-									}
-
-								});
-							}
-						});
-					else
-						throw new Error('PROCESS_ERROR');
-				})
-				.catch(function (err) {
-					done.reject(err);
 				});
 			}
 

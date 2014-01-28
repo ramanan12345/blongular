@@ -7,7 +7,7 @@ module.exports = {
 	/**
 	 * Class Extension
 	 */
-	extend: ['wnExpressController'],
+	extend: ['ExpressController'],
 
 	/**
 	 * Methods

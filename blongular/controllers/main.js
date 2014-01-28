@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class dependencies
 	 */
-	extend: ['wnController'],
+	extend: ['Controller'],
 
 	/**
 	 * NPM Dependencies
@@ -71,7 +71,7 @@ module.exports = {
 					var post = Post.getAttributes();
 
 					if (_.isUndefined(post.id) || (_.isUndefined(post.publishDate) && !req.user._logged))
-						req.e.error(404);	
+						req.e.error(404);
 					else
 					{
 						User.$getUser({ _id: Post.getAttribute('user') }, { displayName: 1, username: 1, bio:1, _id:1, gravatarEmail:1 })
@@ -92,7 +92,6 @@ module.exports = {
 							self.render('read', { posts: formatPost });
 						});
 					}
-						
 				}).catch(function (err) {
 					console.error(err);
 					req.e.error(404);
@@ -279,27 +278,35 @@ module.exports = {
 			.then(function (updated) {
 				req.user.data.alert = ['success','Profile updated.'];
 				User.setAttributes(updated._doc);
-				User.getGravatar(function () {
+
+				if (_.isString(userProfile.password) && userProfile.password.length>0)
+					req.user._logged = false;
+
+				User.$getGravatar()
+				.then(function () {
 					_.extend(req.user.data,User.getAttributes());
-					if (userProfile.password)
-						req.user._logged = false;
 					resp.redirect(redirect,true);
-				});
+				})
 			})
-			.catch(function () {
+			.catch(function (err) {
+				console.log(err);
 				req.user.data.alert = ['danger','Failed to edit your profile.'];
 				resp.redirect(redirect,true);
 			})
 
 		},
 
-
 		/**
 		 * Action: Logout
 		 */
 		actionLogout: function (req,resp,query,models) {
 			req.user._logged=false;
-			resp.redirect('/',true);
+			var redirect = '/';
+
+			if (_.isString(query.GET.r))
+				redirect = query.GET.r;
+
+			resp.redirect(redirect,true);
 		},
 
 		/**

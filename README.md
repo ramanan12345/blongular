@@ -3,10 +3,58 @@ Blongular v0.0.1 (alpha)
 
 ![](https://dl.dropboxusercontent.com/u/21773527/blongular.png)
 
+# Quick Start
+
+## Requirements
+
+- Node.JS v0.8.x with NPM
+- MongoDB server running anywhere
+
+## Install
+
+- Download the lastest version of Blongular. ([Download ZIP](https://github.com/blongular/blongular-release/archive/master.zip) | [Download TAR](https://github.com/blongular/blongular-release/archive/master.tar.gz))
+- Decompress it.
+- Inside the new directory, type: `npm install`
+
+## Setup (--setup)
+
+Now let's setup your new blongular.
+
+- Inside blongular's directory, type: `node blongular --setup`
+- Visit `http://<your ip address or localhost>:27890/` on your browser.]
+- Fullfil the setup form.
+
+## Updating
+
+- Download the latest version of Blongular.
+- Decompress it.
+
+### Blongular Update
+
+- Move the directory `blongular` from the new decompressed directory to your working blongular directory.
+
+### Theme Update
+
+- Move the directory `blogs/blog/themes/default` from the new decompressed directory
+to the directory `blongs/blog/themes/` inside your working blongular directory.
+
+# Structure
+
+## Built with
+
+- [WNS Middleware](http://github.com/yeptlabs/wns)
+- [Angular](http://github.com/angular/angular.js)
+- [Bootstrap](http://github.com/twbs/bootstrap)
+- [Express](http://github.com/visionmedia/express)
+- [Mongoose (MongoDB)](http://github.com/LearnBoost/mongoose)
+- [DustJS](http://github.com/linkedin/dustjs)
+- [jQuery](http://github.com/jquery/jquery)
+- [Medium-Editor](http://github.com/daviferreira/medium-editor)
+
 ## Features
 - WYSIWYG Editor ([Medium Editor](https://github.com/daviferreira/medium-editor))
 - Theme Support (DustJS as template engine)
-- Plugin Support
+- Plugin Support (with CoffeeScript support)
 - Multiple Account Support
 - Multiple Blog Support
 - Multiple Domain Support
@@ -24,35 +72,6 @@ Blongular v0.0.1 (alpha)
 - Search Engine Optimization
 
 [Make sugestions!](https://github.com/blongular/blongular/issues)
-
-# Quick Start
-
-## Requirements
-
-- Node.JS v0.8.x with NPM
-- MongoDB server running anywhere
-
-## Install
-
-- Download the lastest version of Blongular. ([Download ZIP](https://github.com/blongular/blongular-release/archive/master.zip) | [Download TAR](https://github.com/blongular/blongular-release/archive/master.tar.gz))
-- Decompress it.
-- Inside the new directory created, type: `npm install`
-
-## Setup (--setup)
-
-Now let's setup your new blongular.
-
-- Inside blongular's directory, type: `node blongular --setup`
-- Visit `http://<your ip address or localhost>:27890/` on your browser.]
-- Fullfil the setup form.
-
-## Blog Development (--dev) 
-
-You can run using the development mode for editing your blog without restarting.
-
-      $ node blongular --dev
-
-# Structure
 
 ## Blongular's directory
 
@@ -85,16 +104,6 @@ You can support this project:
 - Obvious: [Commiting](https://github.com/blongular/blongular/pulls)
 
 Feel welcome to send **Issues and Pull Requests**, but [read this before](https://github.com/blongular/blongular/blob/master/CONTRIBUTING.md), please.
-
-# Development Flow
-
-*requires npm, bower and grunt*
-
-- Clone this repository.
-- Type `npm install` for installing npm dependencies
-- Type `bower install` for installing bower dependencies
-- Clone the [Blongular Default Theme](http://github.com/blongular/blongular-theme-default) inside the `blogs` directory`
-- Clone and compile [Blongular Blog Seed](http://github.com/blongular/blongular-seed) inside the new blog's `theme` directory
 
 # MIT License
 

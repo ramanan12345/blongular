@@ -8,7 +8,7 @@ module.exports = {
 	/**
 	 * Class Extension
 	 */
-	extend: ['wnAngularResource'],
+	extend: ['AngularResource'],
 
 	/**
 	 * PRIVATE

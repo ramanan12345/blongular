@@ -2,13 +2,13 @@
 {
 	// Directory where your blogs are.
 	"appDirectory": "blogs/",
-	
+
 	"components": {
 		// HTTP server configuration
 		"http": {
 			"debug": true,
 			"verbosity": 1,
-			"class": "wnHttp",
+			"class": "Http",
 			"express": true,
 			// You can change Blongular listening port here.
 			"listen":[27890]
