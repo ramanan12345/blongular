@@ -1,6 +1,6 @@
 module.exports = function (global) {
 
-	var cons=require('../../monostack');
+	var cons=require('monostack');
 	var path=require('path');
 	var setupMode = (process.argv.indexOf('--setup') !== -1);
 
