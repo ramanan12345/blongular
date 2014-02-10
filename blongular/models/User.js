@@ -293,7 +293,7 @@ module.exports = {
 				done.reject(new Error('PROCESS_ERROR'))
 			else
 			{
-				self.getCollection().findOne(attr, function (err,d) {
+				self.getModel().findOne(attr, function (err,d) {
 					if (err)
 						done.reject(new Error('PROCESS_ERROR'));
 					else
@@ -386,7 +386,7 @@ module.exports = {
 		$save: function ()
 		{
 			var data = self.getAttributes();
-			var model = self.getCollection();
+			var model = self.getModel();
 
 			if (self.newObject==true)
 			{

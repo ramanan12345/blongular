@@ -37,19 +37,19 @@ module.exports = {
 
 			this.title='Home';
 
-			var Post = models.Post();
+			var post = models.Post();
 			var maxPosts = blongular.list.maxPerPage;
 
 			var page = Number(query.GET.page || 1) - 1;
 			if (page<0)
 				page = 0;
 
-			Post.$list(page * maxPosts, maxPosts, -1,!req.user._logged)
+			post.$list(page * maxPosts, maxPosts, -1,!req.user._logged)
 			.then(function (posts) {
 				page++;
 				self.render('list', { posts: posts, pageNext: posts.length>=maxPosts ? page + 1 : undefined, pageBack: page - 1 >= 1 ? page - 1 : undefined });
 			}).catch(function (err) {
-				console.log(err);
+				self.e.exception(err);
 				self.render('list', { error: err.message });
 			});
 

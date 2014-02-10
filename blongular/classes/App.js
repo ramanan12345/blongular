@@ -59,12 +59,13 @@ module.exports = {
 				self.db.dataObject.driver.set('debug',true);
 
 			// DB Connection Message
-			self.db.once('connect',function (e,connected) {
+			self.db.once('connect',function (e,err,conn) {
 				if (self.setupMode)
 					return self.e.log('Running using SETUP mode.');
 
-				if (!connected)
+				if (err)
 				{
+					self.e.exception(err);
 					self.e.log('Failed to connect to DATABASE.');
 					self.e.log('Run with --setup for setting up database configuration...');
 					process.exit();

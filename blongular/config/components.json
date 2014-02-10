@@ -39,7 +39,10 @@
 			// "verbosity": 5,
 			"class": "ControllerServer",
 			"defaultController": "main",
-			"errorPage": "main/error"
+			"errorPage": "main/error",
+			"view": {
+				"titleTemplate": "{app.title}"
+			}
 		},
 
 		// Rest Controller: POST
@@ -50,17 +53,6 @@
 		// Rest Controller: LOGIN
 		"loginREST": {
 			"class": "LoginRest"
-		},
-
-		// View configuration (remove/comment to disable)
-		"view": {
-			"class": "View",
-			"titleTemplate": "{self.title} — {app.title}",
-			"language": "en",
-			"menu": {},
-			"menuTemplate":"<ul>{list}</ul>",
-			"menuItemTemplate":"<li><a href='{url}'>{label}</a></li>",
-			"loadScriptPath": "js/"
 		},
 
 		// UrlManager configuration (remove/comment to disable)

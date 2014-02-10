@@ -31,7 +31,7 @@ module.exports = function (global) {
 		app.setupMode = setupMode;
 
 		for (m in server.m)
-			app.m[m] = function () { var m=this.model.model(); m.setParent(this.parent); return m; }.bind({ model: server.m[m], parent: app });
+			app.m[m] = function () { return server.m[m](); }
 
 	});
 

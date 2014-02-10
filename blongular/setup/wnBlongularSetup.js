@@ -102,12 +102,12 @@ module.exports = {
 								fs.writeFileSync(componentsJson,JSON.stringify(componentsConfig,null,'\t'));
 
 							} catch (e) {
-								console.log(e);
+								self.e.exception(e);
 							}
 
-							database.once('connect',function (e,connected) {
-				                              
-								if (connected)
+							database.once('connect',function (e,err) {
+
+								if (!err)
 								{
 
 									if (fields.user && _.isString(fields.user.password))
@@ -122,7 +122,7 @@ module.exports = {
 
 										})
 										.catch(function (err) {
-											console.log(err);
+											self.e.exception(err);
 										});
 									}
 
