@@ -1,6 +1,6 @@
 {
 	"name": "blongular",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A simple and powerful blog system using MonoStack, MongoDB, Angular, Bootstrap and other stuff",
 	"main": "blongular.js",
 	"moduleClass": "Server",

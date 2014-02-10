@@ -1,3 +1,10 @@
+0.0.3 / 09-02-2014
+==================
+
+* Update dependencies
+* Setup bug fix
+* blongular/init.js models preparation fix (to work with new db package changes)
+
 0.0.2-alpha / 28-01-2014
 ==================
 
