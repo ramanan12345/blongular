@@ -1,3 +1,9 @@
+0.0.4 / 16-02-2014
+==================
+
+* Fix plugins import
+* Update mono-mvc-package (bug fix)
+
 0.0.3 / 09-02-2014
 ==================
 
