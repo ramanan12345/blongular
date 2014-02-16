@@ -170,6 +170,7 @@ module.exports = {
 		 */
 		loadPlugins: function () {
 			var pluginsPath = self.app.modulePath+'plugins/';
+			var cb = self.app.getComponent('classCompiler');
 
 			if (!fs.existsSync(pluginsPath))
 				fs.mkdirSync(pluginsPath);
@@ -180,15 +181,23 @@ module.exports = {
 					if (fs.statSync(pluginsPath+plugins[p]).isDirectory())
 						self.app.getConfig().import.push('plugins/'+plugins[p]+'/');
 				self.app.importFromConfig();
-			} catch (e) {}
+			} catch (e) {
+				self.e.err(e);
+			}
+
+			cb.run();
 
 			try {
 				var pluginConfig = fs.readFileSync(self.app.modulePath+'plugins.json');
 				pluginConfig = JSON.parse(pluginConfig.toString('utf8'));
 				self.app.setComponents(pluginConfig);
 				for (c in pluginConfig)
+				{
 					self.app.getComponent(c);
-			} catch (e) {}
+				}
+			} catch (e) {
+				self.e.err(e);
+			}
 		}
 
 	}

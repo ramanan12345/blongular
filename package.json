@@ -1,6 +1,6 @@
 {
 	"name": "blongular",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A simple and powerful blog system using MonoStack, MongoDB, Angular, Bootstrap and other stuff",
 	"main": "blongular.js",
 	"moduleClass": "Server",
@@ -39,7 +39,7 @@
 		"mono-express-package": "^0.0.1",
 		"mono-session-package": "^0.0.1",
 		"mono-static-package": "^0.0.1",
-		"mono-mvc-package": "^0.1.0",
+		"mono-mvc-package": "^0.1.1",
 		"mono-angular-package": "^0.0.2"
 	}
 }
