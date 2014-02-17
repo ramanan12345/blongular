@@ -33,7 +33,7 @@
 		"formidable": "^1.0.14",
 		"bcrypt": "^0.7.7",
 		"mono-db-package": "^1.0.0",
-		"mono-mongo-package": "^1.0.0",
+		"mono-mongo-package": "^1.0.1",
 		"mono-template-package": "^0.0.3",
 		"mono-http-package": "^0.0.1",
 		"mono-express-package": "^0.0.1",
