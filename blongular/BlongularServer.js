@@ -104,7 +104,7 @@ module.exports = {
 			{
 				_components.static.serve.push('../../blongular/setup/html');
 				_components.setup = {
-					"class": "wnBlongularSetup"
+					"class": "BlongularSetup"
 				};
 			}
 		},
@@ -161,7 +161,7 @@ module.exports = {
 			this.app.setComponents(_components);
 			for (c in _components)
 			{
-				this.app.getComponent(c)
+				this.app.getComponent(c);
 			}
 		},
 

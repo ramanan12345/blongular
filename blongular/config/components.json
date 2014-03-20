@@ -41,7 +41,13 @@
 			"defaultController": "main",
 			"errorPage": "main/error",
 			"view": {
-				"titleTemplate": "{app.title}"
+				"titleTemplate": "{{self.title}} - {{app.title}}"
+			},
+			"routes": {
+				"<page:\\d+>/?":"<controller:main>/<action:index>",
+				"<action:post>/<id:.+>":"<controller:main>/<action>",
+				"<action:new>/?":"<controller:main>/<action>",
+				"<action:delete>/<id:.+>":"<controller:main>/<action>"
 			}
 		},
 
@@ -53,17 +59,6 @@
 		// Rest Controller: LOGIN
 		"loginREST": {
 			"class": "LoginRest"
-		},
-
-		// UrlManager configuration (remove/comment to disable)
-		"urlManager": {
-			"class": "UrlManager",
-			"rules": {
-				"<page:\\d+>/?":"<controller:main>/<action:index>",
-				"<action:post>/<id:.+>":"<controller:main>/<action>",
-				"<action:new>/?":"<controller:main>/<action>",
-				"<action:delete>/<id:.+>":"<controller:main>/<action>"
-			}
 		},
 
 		// DbConnection configuration (remove comment to enable)

@@ -1,45 +1,46 @@
 {
-	"name": "blongular",
-	"version": "0.0.4",
-	"description": "A simple and powerful blog system using MonoStack, MongoDB, Angular, Bootstrap and other stuff",
-	"main": "blongular.js",
-	"moduleClass": "Server",
-	"scripts": {
-		"start": "node blongular"
-	},
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/blongular/blongular"
-	},
-	"keywords": [
-		"mongo",
-		"blog",
-		"angular",
-		"monostack"
-	],
-	"author": "Pedro Nasser <pedronasser@yept.net>",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/blongular/blongular/issues"
-	},
-	"dependencies": {
-		"monostack": "^0.2.1",
-		"node-static": "^0.7.x",
-		"mongoose": "^3.6.x",
-		"dustjs-linkedin": "^2.0.x",
-		"dustjs-helpers": "^1.1.x",
-		"moment": "^2.3.1",
-		"express": "^3.4.7",
-		"formidable": "^1.0.14",
-		"bcrypt": "^0.7.7",
-		"mono-db-package": "^1.0.0",
-		"mono-mongo-package": "^1.0.1",
-		"mono-template-package": "^0.0.3",
-		"mono-http-package": "^0.0.1",
-		"mono-express-package": "^0.0.1",
-		"mono-session-package": "^0.0.1",
-		"mono-static-package": "^0.0.1",
-		"mono-mvc-package": "^0.1.1",
-		"mono-angular-package": "^0.0.2"
-	}
+  "name": "blongular",
+  "version": "0.0.5",
+  "description": "A simple and powerful blog system using MonoStack, MongoDB, Angular, Bootstrap and other stuff",
+  "main": "blongular.js",
+  "moduleClass": "Server",
+  "scripts": {
+    "start": "node blongular"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/blongular/blongular"
+  },
+  "keywords": [
+    "mongo",
+    "blog",
+    "angular",
+    "monostack"
+  ],
+  "author": "Pedro Nasser <pedronasser@yept.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blongular/blongular/issues"
+  },
+  "dependencies": {
+    "monostack": "^0.x.x",
+    "node-static": "^0.x.x",
+    "mongoose": "^3.x.x",
+    "dustjs-linkedin": "^2.x.x",
+    "dustjs-helpers": "^1.x.x",
+    "moment": "^2.x.x",
+    "express": "^3.x.x",
+    "formidable": "^1.x.x",
+    "bcrypt": "^0.7.7",
+    "handlebars": "^2.x.x",
+    "mono-db-package": "^1.x.x",
+    "mono-mongo-package": "^1.x.x",
+    "mono-template-package": "^1.x.x",
+    "mono-http-package": "^1.x.x",
+    "mono-express-package": "^0.x.x",
+    "mono-session-package": "^0.x.x",
+    "mono-static-package": "^0.x.x",
+    "mono-mvc-package": "^1.x.x",
+    "mono-angular-package": "^0.x.x"
+  }
 }

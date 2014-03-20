@@ -28,7 +28,7 @@ module.exports = {
 		/**
 		 * Called after any controller is initialized.
 		 */
-		afterInit: function ()
+		beforeAction: function ()
 		{
 			self.blongular=blongular=this.app.getConfig();
 			blongular.siteUrl = self.request.headers.host || '';
