@@ -3,6 +3,7 @@
 
 * Update dependencies
 * Now if Blongular can't connect to MongoDB, it will automatically turn on Setup Mode.
+* Blongular's SETUP-MODE now can only be accessed by localhost
 * Changed from `del` to `delete` on PostRest (express changes)
 * Persistent user sessions (added mono-cache-package)
 
