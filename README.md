@@ -1,4 +1,4 @@
-Blongular v0.0.2 (alpha)
+Blongular v0.1.0 (alpha)
 ==========================
 
 ![](https://dl.dropboxusercontent.com/u/21773527/blongular.png)
