@@ -2,8 +2,8 @@
     "name": "blongular",
     "version": "0.0.1",
     "dependencies": {
-        "angular": "*",
-        "angular-resource": "*",
-        "angular-cookies": "*"
+        "angular": "1.2.16",
+        "angular-resource": "1.2.16",
+        "angular-cookies": "1.2.16"
     }
 }

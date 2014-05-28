@@ -61,7 +61,7 @@ module.exports = {
 		actionPost: function (req,resp,query,models) {
 			var Post = models.Post();
 			var User = models.User();
-			var id = self.postId = query.GET.id;
+			var id = self.view.postId = query.GET.id;
 
 			if (_.isUndefined(id))
 				req.e.error(404);

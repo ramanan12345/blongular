@@ -58,12 +58,18 @@ module.exports = {
          * @desc Check setup forced redirection
          */
         checkSetupRedirect: function (e,req,resp) {
-            if (!self.app.setupMode && req.url == '/setup.html')
+
+            var denied = req.socket.remoteAddress !== '127.0.0.1';
+
+            if (req.url == '/setup.html' && !self.app.setupMode)
             {
                 resp.writeHead(307,{
                     Location: '/'
                 });
                 resp.end();
+            } else if (self.app.setupMode && denied) {
+                resp.statusCode = 403;
+                resp.end('<h1>403 Fobidden</h1>');
             }
             else
                 e.next();
