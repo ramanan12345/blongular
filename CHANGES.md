@@ -1,3 +1,11 @@
+0.1.0 / 28-05-2014
+==================
+
+* Update dependencies
+* Now if Blongular can't connect to MongoDB, it will automatically turn on Setup Mode.
+* Changed from `del` to `delete` on PostRest (express changes)
+* Persistent user sessions (added mono-cache-package)
+
 0.0.5 / 20-03-2014
 ==================
 

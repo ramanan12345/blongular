@@ -28,7 +28,7 @@ module.exports = function (global) {
 	server.addListener('loadModule',function (err,appName,app) {
 		app.m={};
 
-		app.setupMode = setupMode;
+		app.setupMode = app.setupMode || setupMode;
 
 		for (m in server.m)
 			app.m[m] = function () { return server.m[m](); }

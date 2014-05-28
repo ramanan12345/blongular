@@ -22,7 +22,7 @@ module.exports = {
 			app.post('/xhr/posts', self.create);
 			app.get('/xhr/posts/:postId', self.read);
 			app.put('/xhr/posts/:postId', self.update);
-			app.del('/xhr/posts/:postId', self.delete);
+			app.delete('/xhr/posts/:postId', self.delete);
 			app.param('postId', self.model);
 		},
 

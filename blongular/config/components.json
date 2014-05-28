@@ -3,6 +3,12 @@
 	"components": {
 
 		// AngularServer configuration (remove/comment to disable)
+		"cache": {
+			"class": "FileCache",
+			"alias": "cache"
+		},
+
+		// AngularServer configuration (remove/comment to disable)
 		"angular": {
 			"class": "AngularServer",
 			"useBower": true,
@@ -30,7 +36,10 @@
 				"express.favicon": [],
 				"express.methodOverride": [],
 				"app.router":true
-			}
+			},
+            "enable": [
+                "jsonp callback"
+            ]
 		},
 
 		// ControllerServer configuration (remove/comment to disable)

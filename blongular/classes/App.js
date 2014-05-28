@@ -1,5 +1,5 @@
 /**
- * Extend the wnApp class.
+ * Extend the $App class.
  */
 
 // Exports
@@ -51,6 +51,8 @@ module.exports = {
 		 */
 		init: function () {
 
+            var port = self.getParent().getComponent('http').getConfig('listen') || 27890;
+
 			// Moment
 			self.moment=moment;
 
@@ -60,32 +62,29 @@ module.exports = {
 
 			// DB Connection Message
 			self.db.once('connect',function (e,err,conn) {
-				if (self.setupMode)
-					return self.e.log('Running using SETUP mode.');
-
 				if (err)
 				{
-					self.e.exception(err);
 					self.e.log('Failed to connect to DATABASE.');
-					self.e.log('Run with --setup for setting up database configuration...');
-					process.exit();
+                    self.setupMode = true;
 				}
-				else
+
+                if (self.setupMode)
+					self.e.log('Running on SETUP mode.');
+                else
 					self.e.log('BLONGULAR is ready.');
+
+                self.e.log('Access your blongular at http://127.0.0.1:'+port+'/');
 			});
 
 			// Block request if not ready.
 			self.prependListener('newRequest',function (e,req,resp) {
-				if (!self.db.connected)
+				if (!self.db.connected && !self.setupMode)
 				{
 					resp.statusCode = 503;
 					resp.end();
 				} else
 					e.next();
 			});
-
-			// Enable JSONP on express.
-			self.express.enable("jsonp callback");
 
 		}
 

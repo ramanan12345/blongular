@@ -6,8 +6,8 @@
 	"components": {
 		// HTTP server configuration
 		"http": {
-			// "debug": true,
-			// "verbosity": 1,
+//			"debug": true,
+//			"verbosity": 5,
 			"class": "Http",
 			"express": true,
 			// You can change Blongular listening port here.

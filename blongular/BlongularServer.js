@@ -47,6 +47,7 @@ module.exports = {
 		 */
 		init: function ()
 		{
+            self.e.log('Loading your Blongular...')
 			this.app = this.getParent();
 			this.importConfig(_corePath+_configPath);
 			this.importConfig(this.app.modulePath+_config.configPath);
@@ -100,13 +101,10 @@ module.exports = {
 		 */
 		prepareSetup: function ()
 		{
-			if (this.app.setupMode)
-			{
-				_components.static.serve.push('../../blongular/setup/html');
-				_components.setup = {
-					"class": "BlongularSetup"
-				};
-			}
+            _components.static.serve.push('../../blongular/setup/html');
+            _components.setup = {
+                "class": "BlongularSetup"
+            };
 		},
 
 		/**
