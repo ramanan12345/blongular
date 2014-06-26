@@ -32,14 +32,8 @@
 		// Express configuration (remove/comment to disable)
 		"express": {
 			"class": "Express",
-			"use": {
-				"express.favicon": [],
-				"express.methodOverride": [],
-				"app.router":true
-			},
-            "enable": [
-                "jsonp callback"
-            ]
+			"use": {},
+            "enable": []
 		},
 
 		// ControllerServer configuration (remove/comment to disable)

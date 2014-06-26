@@ -1,37 +1,28 @@
+var fs = require('fs');
+
 module.exports = function (global) {
 
 	var cons=require('monostack');
 	var path=require('path');
-	var setupMode = (process.argv.indexOf('--setup') !== -1);
 
 	cons.setConfig('silent',true);
 
 	cons.setServers({
 		'#': {
 			"modulePath": path.relative(cons.modulePath,__dirname+'/../'),
-			"serverID": 'blongular',
-			"import": [
-				"blongular/",
-				"blongular/config/",
-				"blongular/classes/",
-				"blongular/models/",
-				"blongular/setup/",
-				"blongular/editor/modules/",
-				"blongular/editor/resources/",
-				"blongular/editor/controllers/",
-				"blongular/editor/rest/",
-				"blongular/editor/"
-			]
+			"serverID": 'blongular'
 		}
 	});
+
 	var server = cons.createServer('#');
 	server.addListener('loadModule',function (err,appName,app) {
-		app.m={};
 
-		app.setupMode = app.setupMode || setupMode;
+        // Check if app is a valid Blongular
+        if (fs.existsSync(app.getModulePath()+'/blongular.json')) {
 
-		for (m in server.m)
-			app.m[m] = function () { return server.m[m](); }
+            require("./load.js")(server,app,appName);
+
+        }
 
 	});
 

@@ -18,7 +18,9 @@ module.exports = {
 	/**
 	 * PRIVATE
 	 */
-	private: {},
+	private: {
+        blongular: null
+    },
 
 	/**
 	 * Public Variables
@@ -44,6 +46,13 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+
+        /**
+         * After model inits...
+         */
+        afterInit: function () {
+            blongular = this.getParent().getComponent('blongular');
+        },
 
 		/**
 		 * Returns the name of the associated database collection.
@@ -252,6 +261,7 @@ module.exports = {
 						done.resolve(null);
 					else
 					{
+                        blongular.e.getUser(d[0]);
 						self.setAttributes(d[0]);
 						self.$getGravatar()
 						.then(function () {

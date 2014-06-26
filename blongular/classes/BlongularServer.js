@@ -56,6 +56,7 @@ module.exports = {
 			this.prepareSetup();
 			this.startComponents();
 			this.prepareControllers();
+            this.prepareEvents();
 			this.loadPlugins();
 		},
 
@@ -128,7 +129,7 @@ module.exports = {
 		{
 			_.merge(_components,{
 				static: {
-					serve: ['upload/','themes/'+this.app.getConfig('theme')+'/public/'],
+					serve: ['upload/',path.join('themes',this.app.getConfig('theme'),'public/'],
 				},
 				controller: {
 					path: {
@@ -163,11 +164,20 @@ module.exports = {
 			}
 		},
 
+        /**
+         * Prepare Blongular events
+         */
+        prepareEvents: function () {
+
+
+
+        },
+
 		/**
 		 * Load Blongular plugins
 		 */
 		loadPlugins: function () {
-			var pluginsPath = self.app.modulePath+'plugins/';
+			var pluginsPath = path.join(self.app.modulePath,'plugins');
 			var cb = self.app.getComponent('classCompiler');
 
 			if (!fs.existsSync(pluginsPath))
@@ -176,8 +186,8 @@ module.exports = {
 			try {
 				var plugins=fs.readdirSync(pluginsPath)
 				for (p in plugins)
-					if (fs.statSync(pluginsPath+plugins[p]).isDirectory())
-						self.app.getConfig().import.push('plugins/'+plugins[p]+'/');
+					if (fs.statSync(path.join(pluginsPath,plugins[p])).isDirectory())
+						self.app.getConfig().import.push(path.join('plugins',plugins[p]));
 				self.app.importFromConfig();
 			} catch (e) {
 				self.e.err(e);
@@ -186,7 +196,7 @@ module.exports = {
 			cb.run();
 
 			try {
-				var pluginConfig = fs.readFileSync(self.app.modulePath+'plugins.json');
+				var pluginConfig = fs.readFileSync(path.join(self.app.modulePath,'plugins.json'));
 				pluginConfig = JSON.parse(pluginConfig.toString('utf8'));
 				self.app.setComponents(pluginConfig);
 				for (c in pluginConfig)

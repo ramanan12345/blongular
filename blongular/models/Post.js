@@ -13,7 +13,9 @@ module.exports = {
 	/**
 	 * PRIVATE
 	 */
-	private: {},
+	private: {
+        blongular: null
+    },
 
 	/**
 	 * Public Variables
@@ -24,6 +26,13 @@ module.exports = {
 	 * Methods
 	 */
 	methods: {
+
+        /**
+         * After model inits...
+         */
+        afterInit: function () {
+            blongular = this.getParent().getComponent('blongular');
+        },
 
 		/**
 		 * Return the name of the db collection or table.
@@ -163,6 +172,7 @@ module.exports = {
 				for (p in posts)
 					fposts.push(self.formatPost(posts[p]._doc));
 
+                blongular.e.listPost(fposts);
 				done.resolve(fposts)
 			}
 
@@ -208,9 +218,11 @@ module.exports = {
 
 				this.$find({ $or: query })
 				.then(function (posts) {
+                    blongular.e.getPost(posts);
+
 					if (posts[0])
 						self.setAttributes(posts[0]);
-					done.resolve()
+					done.resolve();
 				})
 				.catch(function (err) {
 					done.reject(err);
