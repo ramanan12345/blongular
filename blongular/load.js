@@ -3,6 +3,8 @@ var debugMode = (process.argv.indexOf('--debug') !== -1);
 
 module.exports = function (server,app,appName) {
 
+    app.debugMode = debugMode;
+
     var silenceLog = function (e) {
         if (!debugMode)
             e.stopPropagation = true;
@@ -46,6 +48,7 @@ module.exports = function (server,app,appName) {
     app.importFromConfig();
     app.getComponent('classCompiler').run();
     app.getConfig().import = [];
+    console.log(app.c);
     app.preloadComponents();
 
     server.getComponent('http').attachModule(appName,app);

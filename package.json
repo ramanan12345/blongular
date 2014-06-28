@@ -23,7 +23,7 @@
     "url": "https://github.com/blongular/blongular/issues"
   },
   "dependencies": {
-    "monostack": "^0.3.7",
+    "monostack": "^0.3.8",
     "node-static": "^0.7.3",
     "mongoose": "^3.9.0",
     "dustjs-linkedin": "^2.4.0",
@@ -41,8 +41,9 @@
     "mono-express-package": "^0.0.1",
     "mono-session-package": "^0.0.3",
     "mono-static-package": "^0.0.2",
-    "mono-mvc-package": "^1.0.9",
+    "mono-mvc-package": "^1.0.10",
     "mono-angular-package": "^0.0.3",
-    "mono-cache-package": "0.0.1"
+    "mono-cache-package": "0.0.1",
+    "method-override": "^2.0.2"
   }
 }

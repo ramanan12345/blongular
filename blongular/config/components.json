@@ -38,8 +38,8 @@
 
 		// ControllerServer configuration (remove/comment to disable)
 		"controller": {
-			// "debug": true,
-			// "verbosity": 5,
+			"debug": true,
+			"verbosity": 5,
 			"class": "ControllerServer",
 			"defaultController": "main",
 			"errorPage": "main/error",

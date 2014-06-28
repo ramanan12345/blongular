@@ -5,6 +5,11 @@
 // Exports
 module.exports = {
 
+    /**
+     * Extend
+     */
+    extend: ['EventHelpers'],
+
 	/**
 	 * Private
 	 */
@@ -17,7 +22,11 @@ module.exports = {
 	 */
 	public: {
 		embedScript: [],
-		clientScript: []
+		clientScript: [],
+
+        defaultEvents: {
+            test: {}
+        }
 	},
 
 	/**
@@ -30,6 +39,8 @@ module.exports = {
 		 */
 		beforeAction: function ()
 		{
+            self.e.test();
+
 			self.blongular=blongular=this.app.getConfig();
 			blongular.siteUrl = self.request.headers.host || '';
 

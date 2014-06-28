@@ -24,7 +24,7 @@ module.exports = {
 	 * PRIVATE
 	 */
 	private: {
-		_corePath: __dirname,
+		_corePath: require('path').resolve(__dirname,'..'),
 		_configPath: '/config/',
 		_config: {
 			configPath: ''
@@ -35,7 +35,11 @@ module.exports = {
 	/**
 	 * Public Variables
 	 */
-	public: {},
+	public: {
+
+        defaultEvents: {}
+
+    },
 
 	/**
 	 * Methods
@@ -49,8 +53,8 @@ module.exports = {
 		{
             self.e.log('Loading your Blongular...')
 			this.app = this.getParent();
-			this.importConfig(_corePath+_configPath);
-			this.importConfig(this.app.modulePath+_config.configPath);
+			this.importConfig(path.join(_corePath,_configPath));
+			this.importConfig(path.join(this.app.modulePath,_config.configPath));
 			this.prepareUpload();
 			this.prepareTheme();
 			this.prepareSetup();
@@ -62,18 +66,19 @@ module.exports = {
 
 		/**
 		 * Import all JSON config from a directory.
-		 * @param string $path configuration directory
+		 * @param string $dir configuration directory
 		 */
-		importConfig: function (path)
+		importConfig: function (dir)
 		{
-			if (_.isString(path) && fs.existsSync(path))
+			if (_.isString(dir) && fs.existsSync(dir))
 			{
-				var files = fs.readdirSync(path)
+				var files = fs.readdirSync(dir)
 				for (f in files)
 				{
 					if (/\.json$/.test(files[f]))
 					{
-						var configFile=fs.readFileSync(path+files[f]);
+                        var configPath = path.join(dir,files[f]);
+						var configFile=fs.readFileSync(configPath);
 						if (!configFile)
 							continue;
 						try {
@@ -113,7 +118,7 @@ module.exports = {
 		 */
 		prepareUpload: function ()
 		{
-			var uploadDir = this.app.modulePath+'/'+this.app.getConfig('upload').directory;
+			var uploadDir = path.join(this.app.modulePath,this.app.getConfig('upload').directory);
 			if (!fs.existsSync(uploadDir))
 			{
 				try { fs.mkdirSync(uploadDir); fs.chmodSync(uploadDir, '0777'); } catch (e) {
@@ -129,11 +134,11 @@ module.exports = {
 		{
 			_.merge(_components,{
 				static: {
-					serve: ['upload/',path.join('themes',this.app.getConfig('theme'),'public/'],
+					serve: ['upload/',path.join('themes',this.app.getConfig('theme'),'public')+'/'],
 				},
 				controller: {
 					path: {
-						views: 'themes/'+this.app.getConfig('theme')+'/views/'
+						views: path.join('themes',this.app.getConfig('theme'),'views')+'/'
 					}
 				}
 			});
@@ -143,10 +148,10 @@ module.exports = {
 		 * Prepare your application to load controllers on the correct path.
 		 */
 		prepareControllers: function () {
-			var relative = path.relative(this.app.modulePath,_corePath+'/controllers')+'/';
+			var relative = path.relative(this.app.modulePath,path.join(_corePath,'controllers/'));
 			this.app.getComponent('controller').setConfig({
 				path: {
-					controllers: relative
+					controllers: relative+'/'
 				}
 			});
 		},
@@ -160,7 +165,13 @@ module.exports = {
 			this.app.setComponents(_components);
 			for (c in _components)
 			{
-				this.app.getComponent(c);
+                if (this.app.debugMode)
+                {
+                    _components[c].debug = true;
+                    _components[c].verbosity = 5;
+                }
+
+				var comp = this.app.getComponent(c);
 			}
 		},
 
@@ -168,8 +179,6 @@ module.exports = {
          * Prepare Blongular events
          */
         prepareEvents: function () {
-
-
 
         },
 
